@@ -1,0 +1,120 @@
+
+I want to build a reinforcement‑learning project with the following exact specifications.
+Do not simplify, change, or optimize anything unless I explicitly request it.
+
+1. Environment Specifications
+
+The environment is a 12 × 12 grid, totaling 144 states.
+The agent can take 4 actions: up, down, left, right.
+The start state is the top‑left corner (0,0).
+The goal state is the bottom‑right corner (11,11).
+The user must be able to interact with the UI to define unpassable / blocked states.
+Blocked states must not be enterable by the agent and must not be used in transitions during training.
+If the user defines a configuration that makes the goal unreachable, the system should detect it and avoid breaking.
+
+
+2. Q‑Learning Algorithm Requirements
+Use classical Q‑learning with a Q‑table:
+
+Learning rate (α): 0.1
+Discount factor (γ): 0.95
+Exploration strategy: ε‑greedy
+
+Initial ε = 1.0
+ε decay each episode: ε ← ε × 0.99
+Minimum ε = 0.05
+
+
+Maximum steps per episode: 200
+Total episodes: 2000
+Reward structure:
+
+Reaching the goal: +100
+Every move: –1
+Moving into a blocked state is forbidden (the agent does not enter that cell).
+
+
+Q‑table must have 144 × 4 entries.
+
+Training must run as fast as possible, with no waits or delays.
+
+3. UI Requirements
+Create a full UI with the following capabilities:
+A. Live Grid Visualization
+
+The 12×12 grid must be displayed on screen.
+Each cell must show:
+
+The best action arrow (↑ ↓ ← →) based on current Q-values
+The Q‑value of the best action
+
+
+Blocked states must be visually distinct (e.g., grayed out, X‑marked, or colored differently).
+
+B. Agent Movement Visualization
+
+The agent must be visually shown moving in the grid.
+Movement must be drawn live, but only at intervals defined by the user (in milliseconds).
+The visualization must be decoupled from the training loop:
+
+Training runs instantly
+The UI refreshes independently every X ms
+The UI simply shows the latest agent position and the current Q-table state
+
+
+C. Visualization Timing Control
+
+The user must have an input field to choose the visualization refresh rate in milliseconds.
+Example: user enters “20” → update UI every 20 ms.
+
+D. Unpassable State Controls
+
+The UI must let the user click on any cell to toggle it as unpassable.
+Blocked states update immediately before training.
+second click on the cell make it passable again.
+
+E. Sliding Graph
+
+Display a graph that shows the scores of the last 10 episodes.
+Graph updates in real-time (based on UI refresh interval, not training speed).
+When buffer exceeds 10 values, slide it and keep the latest 10 only.
+
+F. start control
+
+create buttons to start and stop the agent move.
+
+
+4. Behavior Requirements
+- Training must run at full speed
+
+No delays
+No waiting for UI
+Training should finish after 2000 episodes
+Q‑table and agent position should be accessible to the UI during and after training
+
+- Visualization runs independently
+
+UI updates every X ms
+Shows evolving Q‑table
+Shows best directions
+Shows agent location
+Shows last 10 episode scores
+If training is finished early, UI continues showing the final stable policy unless the stop button was clicked
+
+
+5. What I Want From You
+When I ask you to start generating code, you should:
+
+Build the entire project: environment, Q‑learning logic, UI, visualization loops, interaction logic.
+use python and virtual environment.
+code filed no longer than 150 lines.
+Implement everything exactly as defined above.
+Use the appropriate structure for a typical VS Code project (modules, files, etc.).
+Include no unnecessary abstractions.
+Prioritize clean, readable, well-structured code.
+Make sure the training loop is separated from the visualization loop.
+Make sure blocked states work correctly.
+Make sure the grid updates correctly every X ms.
+Make sure the sliding graph works.
+Make sure the agent movement visualization respects the ms delay.
+
